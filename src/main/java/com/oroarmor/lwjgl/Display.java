@@ -88,6 +88,15 @@ public class Display {
 		glTexCoord2d(tx, ty + th);
 
 		glEnd();
+	}
 
+	public static void clear() {
+		GL11.glColor4f(0, 0, 0, 1);
+		glBegin(GL11.GL_QUADS);
+		glVertex2d(-1, -1);
+		glVertex2d(1, -1);
+		glVertex2d(1, 1);
+		glVertex2d(-1, 1);
+		glEnd();
 	}
 }

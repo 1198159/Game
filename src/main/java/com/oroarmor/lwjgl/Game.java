@@ -1,12 +1,14 @@
 package com.oroarmor.lwjgl;
 
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
+import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowTitle;
 import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
 import java.util.ArrayList;
 
+import org.lwjgl.glfw.GLFWMouseButtonCallback;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
@@ -33,6 +35,8 @@ public abstract class Game {
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		startTime = System.currentTimeMillis();
+
+		glfwSetMouseButtonCallback(window, getMouseHandler());
 	}
 
 	public void runGame() {
@@ -86,4 +90,7 @@ public abstract class Game {
 	public long getEllapsedMillis() {
 		return (System.currentTimeMillis() - startTime);
 	}
+
+	public abstract GLFWMouseButtonCallback getMouseHandler();
+
 }

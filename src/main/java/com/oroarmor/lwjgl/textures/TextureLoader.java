@@ -1,6 +1,7 @@
 package com.oroarmor.lwjgl.textures;
 
 import static org.lwjgl.opengl.GL11.GL_LINEAR;
+import static org.lwjgl.opengl.GL11.GL_NEAREST;
 import static org.lwjgl.opengl.GL11.GL_RGB;
 import static org.lwjgl.opengl.GL11.GL_RGBA;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
@@ -99,7 +100,7 @@ public class TextureLoader {
 		tex = getTexture(resourceName, GL_TEXTURE_2D, // target
 				GL_RGBA, // dst pixel format
 				GL_LINEAR, // min filter (unused)
-				GL_LINEAR);
+				GL_NEAREST);
 
 		table.put(resourceName, tex);
 
@@ -128,8 +129,8 @@ public class TextureLoader {
 		glBindTexture(target, textureID);
 
 		BufferedImage bufferedImage = loadImage(resourceName);
-//		texture.setWidth(bufferedImage.getWidth());
-//		texture.setHeight(bufferedImage.getHeight());
+		texture.setWidth(bufferedImage.getWidth());
+		texture.setHeight(bufferedImage.getHeight());
 
 		if (bufferedImage.getColorModel().hasAlpha()) {
 			srcPixelFormat = GL_RGBA;
