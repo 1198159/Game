@@ -38,9 +38,7 @@ public class Display {
 			IntBuffer pHeight = stack.mallocInt(1);
 
 			glfwGetWindowSize(window, pWidth, pHeight);
-
 			GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-
 			glfwSetWindowPos(window, (vidmode.width() - pWidth.get(0)) / 2, (vidmode.height() - pHeight.get(0)) / 2);
 		}
 
@@ -58,7 +56,6 @@ public class Display {
 
 	public static void renderTexture(Texture texture, double x, double y, double w, double h, double tx, double ty,
 			double tw, double th) {
-
 		texture.bind();
 
 		glBegin(GL11.GL_QUADS);
@@ -75,16 +72,6 @@ public class Display {
 		glVertex2d(x + w, y);
 		glTexCoord2d(tx, ty + th);
 
-		glEnd();
-	}
-
-	public static void clear() {
-		GL11.glColor4f(1, 0, 1, 1);
-		glBegin(GL11.GL_QUADS);
-		glVertex2d(-1, -1);
-		glVertex2d(1, -1);
-		glVertex2d(1, 1);
-		glVertex2d(-1, 1);
 		glEnd();
 	}
 }
