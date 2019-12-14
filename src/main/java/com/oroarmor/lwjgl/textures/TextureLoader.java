@@ -25,7 +25,6 @@ import java.awt.image.DataBufferByte;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
@@ -90,7 +89,7 @@ public class TextureLoader {
 	 * @return The loaded texture
 	 * @throws IOException Indicates a failure to access the resource
 	 */
-	public Texture getTexture(String resourceName) throws IOException {
+	public Texture getTexture(String resourceName) {
 		Texture tex = table.get(resourceName);
 
 		if (tex != null) {
@@ -118,8 +117,7 @@ public class TextureLoader {
 	 * @return The loaded texture
 	 * @throws IOException Indicates a failure to access the resource
 	 */
-	public Texture getTexture(String resourceName, int target, int dstPixelFormat, int minFilter, int magFilter)
-			throws IOException {
+	public Texture getTexture(String resourceName, int target, int dstPixelFormat, int minFilter, int magFilter) {
 		int srcPixelFormat;
 
 		// create the texture ID for this texture
@@ -130,8 +128,8 @@ public class TextureLoader {
 		glBindTexture(target, textureID);
 
 		BufferedImage bufferedImage = loadImage(resourceName);
-		texture.setWidth(bufferedImage.getWidth());
-		texture.setHeight(bufferedImage.getHeight());
+//		texture.setWidth(bufferedImage.getWidth());
+//		texture.setHeight(bufferedImage.getHeight());
 
 		if (bufferedImage.getColorModel().hasAlpha()) {
 			srcPixelFormat = GL_RGBA;
@@ -192,9 +190,6 @@ public class TextureLoader {
 			texHeight *= 2;
 		}
 
-		texture.setTextureHeight(texHeight);
-		texture.setTextureWidth(texWidth);
-
 		// create a raster that can be used by OpenGL as a source
 		// for a texture
 		if (bufferedImage.getColorModel().hasAlpha()) {
@@ -230,17 +225,8 @@ public class TextureLoader {
 	 * @return The loaded buffered image
 	 * @throws IOException Indicates a failure to find a resource
 	 */
-	private BufferedImage loadImage(String ref) throws IOException {
-		URL url = TextureLoader.class.getClassLoader().getResource(ref);
-
-		if (url == null) {
-			throw new IOException("Cannot find: " + ref);
-		}
-
-		// due to an issue with ImageIO and mixed signed code
-		// we are now using good oldfashioned ImageIcon to load
-		// images and the paint it on top of a new BufferedImage
-		Image img = new ImageIcon(url).getImage();
+	private BufferedImage loadImage(String ref) {
+		Image img = new ImageIcon(ref).getImage();
 		BufferedImage bufferedImage = new BufferedImage(img.getWidth(null), img.getHeight(null),
 				BufferedImage.TYPE_INT_ARGB);
 		Graphics g = bufferedImage.getGraphics();

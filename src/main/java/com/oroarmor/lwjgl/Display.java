@@ -14,6 +14,10 @@ import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowShouldClose;
 import static org.lwjgl.glfw.GLFW.glfwShowWindow;
 import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glTexCoord2d;
+import static org.lwjgl.opengl.GL11.glVertex2d;
 import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
@@ -21,7 +25,10 @@ import java.nio.IntBuffer;
 
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWVidMode;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.system.MemoryStack;
+
+import com.oroarmor.lwjgl.textures.Texture;
 
 public class Display {
 	public static long CreateDisplay(int width, int height, String windowName) {
@@ -60,5 +67,27 @@ public class Display {
 	public static void destroyDisplay(long window) {
 		glfwFreeCallbacks(window);
 		glfwDestroyWindow(window);
+	}
+
+	public static void renderTexture(Texture texture, double x, double y, double w, double h, double tx, double ty,
+			double tw, double th) {
+		texture.bind();
+
+		glBegin(GL11.GL_QUADS);
+
+		glVertex2d(x, y);
+		glTexCoord2d(tx, ty);
+
+		glVertex2d(x, y + h);
+		glTexCoord2d(tx + tw, ty);
+
+		glVertex2d(x + w, y + h);
+		glTexCoord2d(tx + tw, ty + th);
+
+		glVertex2d(x + w, y);
+		glTexCoord2d(tx, ty + th);
+
+		glEnd();
+
 	}
 }
