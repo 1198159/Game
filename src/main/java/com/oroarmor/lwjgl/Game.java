@@ -16,14 +16,14 @@ import org.lwjgl.opengl.GL11;
 
 public abstract class Game {
 
-	private String name;
-	private long window;
+	protected String name;
+	protected long window;
 
 	private long frames;
 	private long startTime;
 
 	private int frameRateCounts = 60;
-	ArrayList<Long> frameLengths = new ArrayList<Long>(frameRateCounts);
+	private ArrayList<Long> frameLengths = new ArrayList<Long>(frameRateCounts);
 
 	public Game(String name, int width, int height) {
 		this.name = name;
@@ -47,6 +47,9 @@ public abstract class Game {
 		while (!glfwWindowShouldClose(window)) {
 
 			long frameStartTime = getEllapsedMillis();
+
+			GL11.glClearColor(0, 0, 0, 0);
+			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 
 			gameTick();
 			glfwSwapBuffers(window);
