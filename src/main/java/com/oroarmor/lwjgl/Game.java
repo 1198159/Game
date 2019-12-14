@@ -36,6 +36,7 @@ public abstract class Game {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
 		startTime = System.currentTimeMillis();
 
 		glfwSetMouseButtonCallback(window, getMouseHandler());
@@ -49,6 +50,7 @@ public abstract class Game {
 
 			gameTick();
 			glfwSwapBuffers(window);
+
 			glfwPollEvents();
 			frames++;
 

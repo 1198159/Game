@@ -2,7 +2,6 @@ package com.oroarmor.lwjgl.textures;
 
 import static org.lwjgl.opengl.GL11.GL_LINEAR;
 import static org.lwjgl.opengl.GL11.GL_NEAREST;
-import static org.lwjgl.opengl.GL11.GL_RGB;
 import static org.lwjgl.opengl.GL11.GL_RGBA;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
@@ -132,11 +131,11 @@ public class TextureLoader {
 		texture.setWidth(bufferedImage.getWidth());
 		texture.setHeight(bufferedImage.getHeight());
 
-		if (bufferedImage.getColorModel().hasAlpha()) {
-			srcPixelFormat = GL_RGBA;
-		} else {
-			srcPixelFormat = GL_RGB;
-		}
+//		if (bufferedImage.getColorModel().hasAlpha()) {
+		srcPixelFormat = GL_RGBA;
+//		} else {
+//			srcPixelFormat = GL_RGB;
+//		}
 
 		// convert that image into a byte buffer of texture data
 		ByteBuffer textureBuffer = convertImageData(bufferedImage, texture);
