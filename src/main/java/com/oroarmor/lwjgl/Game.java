@@ -1,11 +1,8 @@
 package com.oroarmor.lwjgl;
 
-import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
 import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowTitle;
-import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
-import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
+import static org.lwjgl.opengl.GL11.glViewport;
 
 import java.util.ArrayList;
 
@@ -17,7 +14,7 @@ import org.lwjgl.opengl.GL11;
 public abstract class Game {
 
 	protected String name;
-	protected long window;
+	protected Window window;
 
 	private long frames;
 	private long startTime;
@@ -27,7 +24,7 @@ public abstract class Game {
 
 	public Game(String name, int width, int height) {
 		this.name = name;
-		window = Display.CreateDisplay(width, height, name);
+		window = new Window(name, width, height, true);
 		initalizeGame();
 	}
 
@@ -39,20 +36,24 @@ public abstract class Game {
 
 		startTime = System.currentTimeMillis();
 
-		glfwSetMouseButtonCallback(window, getMouseHandler());
-		glfwSetKeyCallback(window, getKeyHandler());
+		glfwSetMouseButtonCallback(window.getWindowHandle(), getMouseHandler());
+		glfwSetKeyCallback(window.getWindowHandle(), getKeyHandler());
 	}
 
 	public void runGame() {
-		while (!glfwWindowShouldClose(window)) {
+		while (!window.windowShouldClose()) {
 			long frameStartTime = getEllapsedMillis();
 
-			GL11.glClearColor(0, 0, 0, 0);
+			GL11.glClearColor(1, 1, 1, 0);
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 
+			if (window.isResized()) {
+				glViewport(0, 0, window.getWidth(), window.getHeight());
+				window.setResized(false);
+			}
+
 			gameTick();
-			glfwSwapBuffers(window);
-			glfwPollEvents();
+			window.update();
 
 			frames++;
 			frameLengths.add(0, getEllapsedMillis() - frameStartTime);
@@ -69,13 +70,11 @@ public abstract class Game {
 	}
 
 	public void setName(String name) {
-		glfwSetWindowTitle(window, name);
 		this.name = name;
 	}
 
 	public void endGame() {
-		Display.destroyDisplay(window);
-		GLFWManager.deinitalize();
+
 	}
 
 	public long getFrames() {

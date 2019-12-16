@@ -1,37 +1,41 @@
 package com.alex.game;
 
-import static org.lwjgl.glfw.GLFW.glfwSetWindowShouldClose;
+import static org.lwjgl.glfw.GLFW.*;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 
-import com.oroarmor.lwjgl.Display;
 import com.oroarmor.lwjgl.Game;
+import com.oroarmor.lwjgl.shader.Vingette;
 import com.oroarmor.lwjgl.textures.Texture;
 import com.oroarmor.lwjgl.textures.TextureLoader;
 
 public class AlexGame extends Game {
 
-	TextureLoader loader = new TextureLoader();
-	Texture testImage;
+	private TextureLoader loader = new TextureLoader();
+	private Texture testImage;
+	Vingette vingette;
 
 	private int numRepeats = 1;
 
-	public AlexGame(String name, int width, int height) {
+	public AlexGame(String name, int width, int height) throws Exception {
 		super(name, width, height);
 		testImage = loader.getTexture("src/main/resources/images/grassTextures.png");
+		testImage.setWidth(16);
+		testImage.setHeight(16);
+		testImage.setTextureHeight(16);
+		testImage.setTextureWidth(16);
+
+		vingette = new Vingette(0.2f);
+		vingette.init();
+
 	}
 
 	@Override
 	protected void gameTick() {
 		System.out.println(getFrameRate());
-		for (int i = 0; i < numRepeats; i++) {
-			for (int j = 0; j < numRepeats; j++) {
-				Display.renderTexture(testImage, -1 + (double) 2 / numRepeats * i, -1 + (double) 2 / numRepeats * j,
-						(double) 2 / numRepeats, (double) 2 / numRepeats, 0.75, 0, 0.25, 0.25);
-			}
-		}
+		vingette.render();
 	}
 
 	@Override
