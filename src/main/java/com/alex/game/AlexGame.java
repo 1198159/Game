@@ -1,11 +1,6 @@
 package com.alex.game;
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowShouldClose;
-//import static org.lwjgl.opengl.GL11.glBegin;
-//import static org.lwjgl.opengl.GL11.glVertex2d;
-//import static org.lwjgl.opengl.GL11.glEnd;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWKeyCallback;
@@ -33,8 +28,8 @@ public class AlexGame extends Game {
 		System.out.println(getFrameRate());
 		for (int i = 0; i < numRepeats; i++) {
 			for (int j = 0; j < numRepeats; j++) {
-				Display.renderTexture(testImage, -1 + (float) 2 / numRepeats * i, -1 + (float) 2 / numRepeats * j,
-						(float) 2 / numRepeats, (float) 2 / numRepeats, 0.75, 0, 0.25, 0.25);
+				Display.renderTexture(testImage, -1 + (double) 2 / numRepeats * i, -1 + (double) 2 / numRepeats * j,
+						(double) 2 / numRepeats, (double) 2 / numRepeats, 0.75, 0, 0.25, 0.25);
 			}
 		}
 	}
@@ -45,7 +40,10 @@ public class AlexGame extends Game {
 			@Override
 			public void invoke(long window, int button, int action, int mods) {
 				if (action == GLFW.GLFW_PRESS) {
-					numRepeats++;
+					numRepeats += (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) ? 1 : -1;
+					if (numRepeats == 0) {
+						numRepeats = 1;
+					}
 				}
 			}
 		};
@@ -64,9 +62,8 @@ public class AlexGame extends Game {
 						}
 					}
 				}
-				if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
+				if (key == GLFW.GLFW_KEY_ESCAPE && action == GLFW.GLFW_RELEASE)
 					glfwSetWindowShouldClose(window, true);
-
 			}
 		};
 	}

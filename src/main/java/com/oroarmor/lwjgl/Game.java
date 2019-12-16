@@ -45,7 +45,6 @@ public abstract class Game {
 
 	public void runGame() {
 		while (!glfwWindowShouldClose(window)) {
-
 			long frameStartTime = getEllapsedMillis();
 
 			GL11.glClearColor(0, 0, 0, 0);
@@ -53,10 +52,9 @@ public abstract class Game {
 
 			gameTick();
 			glfwSwapBuffers(window);
-
 			glfwPollEvents();
-			frames++;
 
+			frames++;
 			frameLengths.add(0, getEllapsedMillis() - frameStartTime);
 			if (frameLengths.size() > frameRateCounts) {
 				frameLengths.remove(frameRateCounts);
@@ -85,13 +83,10 @@ public abstract class Game {
 	}
 
 	public double getFrameRate() {
-
 		long past100Frames = 0;
-
 		for (long frameLength : frameLengths) {
 			past100Frames += frameLength;
 		}
-
 		return 1000d / (past100Frames / (double) frameRateCounts);
 	}
 
@@ -102,5 +97,4 @@ public abstract class Game {
 	public abstract GLFWMouseButtonCallback getMouseHandler();
 
 	public abstract GLFWKeyCallback getKeyHandler();
-
 }
