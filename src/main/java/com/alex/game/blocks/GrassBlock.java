@@ -1,5 +1,6 @@
 package com.alex.game.blocks;
 
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,11 +17,6 @@ public class GrassBlock extends Block implements Commons {
 
 	private static final int DURABILITY_VALUE = 1;
 
-	// filepath
-	private String path = "src\\main\\resources\\images\\simplegrass.png";
-	// size
-	private Size size = new Size(Commons.BLOCKSIZE);
-
 	public GrassBlock(Position position, SpriteSheet image, int durability) {
 		super(position, image, DURABILITY_VALUE, BlockType.NORMAL, ToolType.SWORD, ToolLevel.ALL, LightLevel.NONE);
 	}
@@ -31,7 +27,7 @@ public class GrassBlock extends Block implements Commons {
 
 	@Override
 	protected void update() {
-		
+
 	}
 
 	@Override
@@ -39,12 +35,12 @@ public class GrassBlock extends Block implements Commons {
 		SpriteSheet textures;
 		BufferedImage img = null;
 		try {
-			img = ImageIO.read(new File(path));
+			File imageFile = new File(System.getProperty("user.dir") + imagePath);
+			img = ImageIO.read(imageFile);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		textures = new SpriteSheet(img, 2, 2, size);
+		textures = new SpriteSheet(img, 2, 2, new Size(Commons.BLOCKSIZE));
 
 		return textures;
 	}
@@ -52,6 +48,11 @@ public class GrassBlock extends Block implements Commons {
 	@Override
 	public Item getItem() {
 		return new Item(); // Switch eventually to a grass block item
+	}
+
+	@Override
+	public void render(Graphics g) {
+		g.drawImage(image.getSheet()[0][1], (int) position.x, (int) position.y, null);
 	}
 
 }

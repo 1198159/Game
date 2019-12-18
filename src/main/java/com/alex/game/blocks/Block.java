@@ -1,5 +1,7 @@
 package com.alex.game.blocks;
 
+import java.awt.Graphics;
+
 import com.alex.game.Items.Item;
 import com.alex.libraries.Position;
 import com.alex.libraries.SpriteSheet;
@@ -84,6 +86,8 @@ public abstract class Block {
 
 	// public abstract Item getSilkTouchItem(); Only if we do enchanments
 	public abstract Item getItem();
+
+	public abstract void render(Graphics g);
 
 	public enum BlockType {
 		NORMAL, TILE
