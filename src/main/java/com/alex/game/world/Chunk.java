@@ -5,7 +5,7 @@ import com.alex.game.blocks.GrassBlock;
 import com.alex.game.blocks.StoneBlock;
 
 public class Chunk implements Commons {
-	public Block blocks = null;
+	//public Block blocks = null;
 	public GrassBlock[][][] grassBlocks = null;
 	public StoneBlock[][][] stoneBlocks = null;
 

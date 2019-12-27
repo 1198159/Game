@@ -3,6 +3,7 @@ package com.alex.game.blocks;
 import java.awt.Graphics;
 
 import com.alex.game.items.Item;
+import com.alex.game.world.World;
 import com.alex.libraries.Position;
 import com.alex.libraries.SpriteSheet;
 
@@ -30,10 +31,9 @@ public abstract class Block {
 		this.toolLevel = toolLevel;
 		this.lightLevel = lightLevel;
 		this.connectedBlocks = ConnectedBlocks.NEUTRAL;
-		update();
 	}
 
-	protected abstract void update();
+	public abstract void update(World world);
 
 	public Block(Position position, String imagePath, int durability, BlockType blockType, ToolType toolType,
 			ToolLevel toolLevel, LightLevel lightLevel) {
