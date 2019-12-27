@@ -13,16 +13,16 @@ import com.alex.libraries.Position;
 import com.alex.libraries.Size;
 import com.alex.libraries.SpriteSheet;
 
-public class GrassBlock extends Block implements Commons {
+public class StoneBlock extends Block implements Commons {
 
 	private static final int DURABILITY_VALUE = 1;
 
-	public GrassBlock(Position position, SpriteSheet image, int durability) {
-		super(position, image, DURABILITY_VALUE, BlockType.NORMAL, ToolType.SHOVEL, ToolLevel.ALL, LightLevel.NONE);
+	public StoneBlock(Position position, SpriteSheet image, int durability) {
+		super(position, image, DURABILITY_VALUE, BlockType.NORMAL, ToolType.PICKAXE, ToolLevel.ALL, LightLevel.NONE);
 	}
 
-	public GrassBlock(Position position, String imagePath, int durability) {
-		super(position, imagePath, DURABILITY_VALUE, BlockType.NORMAL, ToolType.SHOVEL, ToolLevel.ALL, LightLevel.NONE);
+	public StoneBlock(Position position, String imagePath, int durability) {
+		super(position, imagePath, DURABILITY_VALUE, BlockType.NORMAL, ToolType.PICKAXE, ToolLevel.ALL, LightLevel.NONE);
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package com.alex.game.blocks;
 
 import java.awt.Graphics;
 
-import com.alex.game.Items.Item;
+import com.alex.game.items.Item;
 import com.alex.libraries.Position;
 import com.alex.libraries.SpriteSheet;
 
