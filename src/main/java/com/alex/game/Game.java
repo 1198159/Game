@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import javax.swing.JFrame;
 
 import com.alex.game.blocks.GrassBlock;
+import com.alex.game.world.World;
 import com.alex.libraries.Position;
 
 public class Game extends JFrame {
@@ -15,23 +16,33 @@ public class Game extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private World world;
+
 	public Game() {
 		super();
 		setSize(new Dimension(500, 500));
 		setVisible(true);
 
+		world = new World();
+
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				for (int k = 0; k < 1; k++) {
+					world.setBlock(new Position(i, j, k),
+							new GrassBlock(new Position(i, j, k), "/src/main/resources/images/simplegrass.png"));
+				}
+			}
+		}
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		repaint();
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		g.clearRect(0, 0, getWidth(), getHeight());
-
-		GrassBlock block = new GrassBlock(new Position(200, 200, 0), "/src/main/resources/images/blocks/grass.png", 10);
-		GrassBlock block2 = new GrassBlock(new Position(100, 100, 0), "/src/main/resources/images/blocks/grass.png",
-				10);
-		block.render(g);
-		block2.render(g);
+		world.render(g);
 	}
 
 }
